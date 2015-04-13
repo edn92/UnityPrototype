@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8eb18edad23f756498b4d22589d23276
+timeCreated: 1428798086
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 118706, guid: 54db67bb4b3dd8b4bae3c43951ce1168, type: 2}
+  - gameUI: {instanceID: 0}
+  - healthBar: {instanceID: 0}
+  - staminaBar: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
