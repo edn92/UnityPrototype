@@ -6,8 +6,6 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	public GameObject healthPickupPrefab;
 	private GameObject player;
-	
-	public float numHealthPickups = 1;
 
 	public float currentHealth;
 	public float maxHealth;
@@ -19,6 +17,14 @@ public class GameManager : MonoBehaviour {
 	public float staminaRechargeDelay;
 	private float startStaminaRecharge;
 	private Image staminaBar;
+
+	private Image standardShotImage;
+	public int machineGunAmmo;
+	private Image machineGunImage;
+	private Text machineGunText;
+
+	private Image pauseIcon;
+	private bool isPaused;
 	// Use this for initialization
 
 	private GameObject gameManager;
@@ -28,6 +34,12 @@ public class GameManager : MonoBehaviour {
 
 		healthBar = GameObject.Find ("HealthBar").GetComponent<Image>();
 		staminaBar = GameObject.Find ("StaminaBar").GetComponent<Image> ();
+		pauseIcon = GameObject.Find ("PauseIcon").GetComponent<Image> ();
+		pauseIcon.enabled = false;
+
+		standardShotImage = GameObject.Find ("StandardBullet").GetComponent<Image> ();
+		machineGunImage = GameObject.Find ("MachineBullet").GetComponent<Image> ();
+		machineGunText = GameObject.Find ("MachineBulletText").GetComponent<Text> ();
 
 		var pickupSpawns = GameObject.FindGameObjectsWithTag ("Pickup");
 		foreach (var spots in pickupSpawns){
@@ -41,13 +53,7 @@ public class GameManager : MonoBehaviour {
 		healthBar.fillAmount = currentHealth / maxHealth;
 		staminaBar.fillAmount = currentStamina / maxStamina;
 
-		//UpdateStamina (staminaRechargeRate);
-		/*if (Input.GetKey (KeyCode.LeftShift) && currentStamina > 0) {
-			UpdateStamina (staminaDrainRate);
-			startStaminaRecharge = Time.time + staminaRechargeDelay;
-		} else if (Time.time > startStaminaRecharge){
-			UpdateStamina (staminaRechargeRate);
-		}*/
+		machineGunText.text = "" + machineGunAmmo;
 
 		if (Time.time > startStaminaRecharge) {
 			UpdateStamina (staminaRechargeRate);
@@ -63,6 +69,10 @@ public class GameManager : MonoBehaviour {
 
 		if (currentHealth > maxHealth) {
 			currentHealth = maxHealth;
+		}
+
+		if (Input.GetKeyDown (KeyCode.P)) {
+			PauseGame ();
 		}
 	}
 
@@ -80,5 +90,25 @@ public class GameManager : MonoBehaviour {
 
 	public void StartStaminaDelay(){
 		startStaminaRecharge = Time.time + staminaRechargeDelay;
+	}
+
+	public void UseMachineGunAmmo(){
+		machineGunAmmo--;
+	}
+
+	public int GetMachineGunAmmo(){
+		return machineGunAmmo;
+	}
+
+	public void PauseGame(){
+        if(!isPaused){
+            Time.timeScale = 0;
+            isPaused = true;
+            pauseIcon.enabled = true;
+        } else {
+            Time.timeScale = 1;
+            isPaused = false;
+            pauseIcon.enabled = false;
+        }
 	}
 }
