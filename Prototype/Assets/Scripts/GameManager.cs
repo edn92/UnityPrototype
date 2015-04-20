@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
 		GameObject exit = GameObject.FindGameObjectWithTag ("LevelExit") as GameObject;
 		exit = Instantiate (levelExitPrefab, exit.transform.position, exit.transform.rotation) as GameObject;
 		exit.GetComponent<ExitLevel> ().SetGameManager (this.gameObject);
-		exit.GetComponent<ExitLevel> ().SetLevelExit ("LevelTwo");
+		exit.GetComponent<ExitLevel> ().SetLevelExit (exitToLevel);
 	}
 	
 	// Update is called once per frame

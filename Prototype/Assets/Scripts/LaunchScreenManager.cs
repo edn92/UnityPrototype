@@ -2,16 +2,16 @@
 using System.Collections;
 
 public class LaunchScreenManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
+	//attached to buttons
+	public void StartGame(){
+		Application.LoadLevel ("LevelOne");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButton("Cancel")){
-			Application.LoadLevel ("LevelOne");
-		}
+
+	public void DiplayHelp(){
+		Debug.Log ("Help");
+	}
+
+	public void ExitGame(){
+		Debug.Log ("Exiting game");
 	}
 }
