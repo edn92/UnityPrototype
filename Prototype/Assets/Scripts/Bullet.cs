@@ -15,7 +15,11 @@ public class Bullet : MonoBehaviour {
 		rgb2d.AddForce(transform.right * speed);
 	}
 
-	void OnTriggerEnter2D(Collider2D other){
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag == "Ground") {
+			Destroy (gameObject);
+		}
+
 		//Destroy (gameObject);
 	}
 }

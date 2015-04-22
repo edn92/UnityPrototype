@@ -22,7 +22,6 @@ public class HealthPickup : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Player") {
 			col.GetComponent<PlayerHealth>().UpdateHealth (addHealth);
-			//gameManager.GetComponent<GameManager> ().UpdateHealth (addHealth);
 			gameManager.GetComponent<GameManager> ().ShowNotification ("Health picked up!");
 			Destroy (gameObject);
 		}

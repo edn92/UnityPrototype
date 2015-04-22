@@ -62,4 +62,8 @@ public class PlayerHealth : MonoBehaviour {
 	public void SetGameManager(GameObject gameManagerObject){
 		gameManager = gameManagerObject;
 	}
+
+	public void TakeDamage(float damage){
+		currentHealth -= damage;
+	}
 }

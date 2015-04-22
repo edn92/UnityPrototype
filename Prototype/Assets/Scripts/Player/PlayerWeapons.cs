@@ -35,18 +35,26 @@ public class PlayerWeapons : MonoBehaviour {
 		//shooting controls
 		if (Input.GetButton ("Jump")){
 			//flip transform.localRotation depending on which way player is facing
-			/*Checks which weapon state we're in before firing. Fire rate will be updated for each weapon*/
+			/*Checks which weapon state we're in before firing. Fire rate will be updated for each weapon
+			  Need to create an offset from where the bullet is instantiated attached to the player*/
 			if (equippedWeapon == 0){
 				if (Time.time > nextFire){
 					nextFire = Time.time + standardFireRate;
-					Instantiate (bulletPrefab, transform.localPosition, transform.localRotation);
-					
+					if (GetComponent<PlayerControllerScript>().Facing()){
+						Instantiate (bulletPrefab, transform.localPosition, transform.localRotation);
+					} else {
+						Instantiate (bulletPrefab, transform.localPosition, Quaternion.Euler(0, 0, 180));
+					}	
 				}
 			} else if (equippedWeapon == 1 && machineGunAmmo > 0){
 				if (Time.time > nextFire){
 					UseMachineGunAmmo();
 					nextFire = Time.time + machineFireRate;
-					Instantiate (machineBulletPrefab, transform.localPosition, transform.localRotation);
+					if (GetComponent<PlayerControllerScript>().Facing()){
+						Instantiate (machineBulletPrefab, transform.localPosition, transform.localRotation);
+					} else {
+						Instantiate (machineBulletPrefab, transform.localPosition, Quaternion.Euler(0, 0, 180));
+					}
 				}
 			}
 		}

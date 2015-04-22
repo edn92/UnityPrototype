@@ -51,6 +51,8 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HealthPickup.cs" />
      <Compile Include="Assets\Scripts\LaunchScreenManager.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\ElectricFence.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\Turret.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerControllerScript.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerWeapons.cs" />

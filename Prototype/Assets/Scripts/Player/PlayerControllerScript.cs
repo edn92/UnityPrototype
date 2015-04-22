@@ -16,6 +16,8 @@ public class PlayerControllerScript : MonoBehaviour {
 	public LayerMask whatisGround;
 	public bool grounded = false;
 
+	public bool facingRight = true;
+
 	private PlayerWeapons playerWeapons;
 	private PlayerHealth playerHealth;
 	/*used for flipping player sprite
@@ -29,6 +31,7 @@ public class PlayerControllerScript : MonoBehaviour {
 	void Start () {
 		rgb2d = GetComponent<Rigidbody2D> ();
 
+		//not really used atm
 		playerWeapons = GetComponent<PlayerWeapons> ();
 		playerWeapons.SetGameManager (gameManager);
 
@@ -40,6 +43,13 @@ public class PlayerControllerScript : MonoBehaviour {
 	void Update(){
 		//sideways movement
 		float translation = Input.GetAxis ("Horizontal");
+		if (translation < 0 && facingRight) {
+			Flip();
+
+		} else if (translation > 0 && !facingRight) {
+			Flip();
+		}
+
 		if (translation != 0 && Input.GetKey (KeyCode.LeftShift) && 
 		        GetComponent<PlayerHealth> ().GetStamina () > 0 && grounded) {
 			playerHealth.UpdateStamina (-sprintStaminaDrain);
@@ -49,6 +59,7 @@ public class PlayerControllerScript : MonoBehaviour {
 		} else if (translation != 0) {
 			rgb2d.velocity = new Vector2 (translation * maxSpeed, rgb2d.velocity.y);
 		}
+
 		//jumping controls
 		if (grounded && Input.GetKeyDown (KeyCode.W)) {
 			rgb2d.AddForce (new Vector2 (0, jumpForce));
@@ -67,13 +78,20 @@ public class PlayerControllerScript : MonoBehaviour {
 
 	void FixedUpdate(){
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatisGround);
-
-		//float h = Input.GetAxis ("Horizontal");
-
-		//anim.SetFloat("Speed", Mathf.Abs(h));
 	}
 
 	public void SetGameManager(GameObject gameManagerObject){
 		gameManager = gameManagerObject;
+	}
+
+	void Flip(){
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
+
+	public bool Facing(){
+		return facingRight;
 	}
 }
