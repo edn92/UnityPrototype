@@ -18,8 +18,11 @@ public class PlayerWeapons : MonoBehaviour {
 	private Text machineGunText;
 
 	private GameObject gameManager;
+	private GameObject weaponPoint;
 	// Use this for initialization
 	void Start () {
+		weaponPoint = transform.Find ("WeaponPoint").gameObject;
+
 		standardShotImage = GameObject.Find ("StandardBullet").GetComponent<Image> ();
 		machineGunImage = GameObject.Find ("MachineBullet").GetComponent<Image> ();
 		machineGunText = GameObject.Find ("MachineBulletText").GetComponent<Text> ();
@@ -41,9 +44,9 @@ public class PlayerWeapons : MonoBehaviour {
 				if (Time.time > nextFire){
 					nextFire = Time.time + standardFireRate;
 					if (GetComponent<PlayerControllerScript>().Facing()){
-						Instantiate (bulletPrefab, transform.localPosition, transform.localRotation);
+						Instantiate (bulletPrefab, weaponPoint.transform.position, transform.localRotation);
 					} else {
-						Instantiate (bulletPrefab, transform.localPosition, Quaternion.Euler(0, 0, 180));
+						Instantiate (bulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180));
 					}	
 				}
 			} else if (equippedWeapon == 1 && machineGunAmmo > 0){
@@ -51,9 +54,9 @@ public class PlayerWeapons : MonoBehaviour {
 					UseMachineGunAmmo();
 					nextFire = Time.time + machineFireRate;
 					if (GetComponent<PlayerControllerScript>().Facing()){
-						Instantiate (machineBulletPrefab, transform.localPosition, transform.localRotation);
+						Instantiate (machineBulletPrefab, weaponPoint.transform.position, transform.localRotation);
 					} else {
-						Instantiate (machineBulletPrefab, transform.localPosition, Quaternion.Euler(0, 0, 180));
+						Instantiate (machineBulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180));
 					}
 				}
 			}

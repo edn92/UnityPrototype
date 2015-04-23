@@ -5,7 +5,6 @@ public class ElectricFence : MonoBehaviour {
 	private bool inContact;
 	private float nextZap;
 	public float zapRate = 0.1f;
-	public float health = 100f;
 	// Use this for initialization
 	void Start () {
 	
