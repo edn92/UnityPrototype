@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class HealthPickup : MonoBehaviour {
-	public float addHealth = 20f;
-	private GameObject player;
+	private float addHealth;
+	//public int score;
 	private GameObject gameManager;
 	// Use this for initialization
 	void Start () {
@@ -21,8 +21,9 @@ public class HealthPickup : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.gameObject.tag == "Player") {
+			addHealth = Random.Range (15, 20);
 			col.GetComponent<PlayerHealth>().UpdateHealth (addHealth);
-			gameManager.GetComponent<GameManager> ().ShowNotification ("Health picked up!");
+			gameManager.GetComponent<GameManager> ().ShowNotification ("Found " + addHealth + "HP!");
 			Destroy (gameObject);
 		}
 	}

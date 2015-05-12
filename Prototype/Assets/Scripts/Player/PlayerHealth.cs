@@ -33,16 +33,32 @@ public class PlayerHealth : MonoBehaviour {
 		if (currentStamina < 0.01) {
 			currentStamina = 0;
 		}
-		
+
+
 		if (currentStamina > maxStamina) {
 			currentStamina = maxStamina;
 		}
-		
+
+		if (currentHealth < 0.01) {
+			gameManager.GetComponent<GameManager>().GameOver();
+		}
+
 		if (currentHealth > maxHealth) {
 			currentHealth = maxHealth;
 		}
 	}
-	
+
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.gameObject.tag == "Enemy") {
+			Knockback(col.transform);
+		}
+	}
+
+	private void Knockback(Transform enemy){
+		Vector3 hurtVector = transform.position - enemy.position + Vector3.up * 5f;
+		GetComponent<Rigidbody2D> ().AddForce (hurtVector * 50);
+	}
+
 	public void UpdateHealth(float health){
 		currentHealth += health;
 	}

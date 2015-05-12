@@ -47,18 +47,23 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ExitLevel.cs" />
-     <Compile Include="Assets\Scripts\GameManager.cs" />
-     <Compile Include="Assets\Scripts\LaunchScreenManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\ButtonManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Managers\LaunchScreenManager.cs" />
      <Compile Include="Assets\Scripts\Obstacles\ElectricFence.cs" />
      <Compile Include="Assets\Scripts\Obstacles\EnemyBullet.cs" />
-     <Compile Include="Assets\Scripts\Obstacles\EnemyHealth.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\EnemyStatus.cs" />
+     <Compile Include="Assets\Scripts\Obstacles\HydraulicPress.cs" />
      <Compile Include="Assets\Scripts\Obstacles\Turret.cs" />
      <Compile Include="Assets\Scripts\Obstacles\TurretLockOn.cs" />
      <Compile Include="Assets\Scripts\Pickups\HealthPickup.cs" />
+     <Compile Include="Assets\Scripts\Pickups\MachineGunAmmoPickup.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerControllerScript.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerHealth.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerWeapons.cs" />
+     <Compile Include="Assets\Scripts\Player\Weapons\Grenade.cs" />
      <Compile Include="Assets\Scripts\Player\Weapons\PlayerBullet.cs" />
+     <Compile Include="Assets\Scripts\TutorialPopup.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

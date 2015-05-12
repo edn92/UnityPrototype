@@ -7,14 +7,12 @@ public class PlayerWeapons : MonoBehaviour {
 	public GameObject machineBulletPrefab;
 
 	public float equippedWeapon;
-	public float fireRate;
 	private float nextFire;
 	private float standardFireRate = 0.3f;
 	private float machineFireRate = 0.05f;
 
-	private Image standardShotImage;
 	public int machineGunAmmo;
-	private Image machineGunImage;
+	//private RectTransform activeIndicator;
 	private Text machineGunText;
 
 	private GameObject gameManager;
@@ -23,13 +21,12 @@ public class PlayerWeapons : MonoBehaviour {
 	void Start () {
 		weaponPoint = transform.Find ("WeaponPoint").gameObject;
 
-		standardShotImage = GameObject.Find ("StandardBullet").GetComponent<Image> ();
-		machineGunImage = GameObject.Find ("MachineBullet").GetComponent<Image> ();
 		machineGunText = GameObject.Find ("MachineBulletText").GetComponent<Text> ();
 		machineGunText.text = "" + machineGunAmmo;
 
+		//activeIndicator = GameObject.Find ("ActiveIndicator").GetComponent<RectTransform>();
+
 		equippedWeapon = 0;
-		fireRate = standardFireRate;
 	}
 	
 	// Update is called once per frame
@@ -44,24 +41,32 @@ public class PlayerWeapons : MonoBehaviour {
 				if (Time.time > nextFire){
 					nextFire = Time.time + standardFireRate;
 					if (GetComponent<PlayerControllerScript>().Facing()){
-						Instantiate (bulletPrefab, weaponPoint.transform.position, transform.localRotation);
+						GameObject  bullet = Instantiate (bulletPrefab, weaponPoint.transform.position, transform.localRotation) as GameObject;
+						bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 					} else {
-						Instantiate (bulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180));
+						GameObject bullet = Instantiate (bulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180)) as GameObject;
+						bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-20, 0);
 					}	
 				}
 			} else if (equippedWeapon == 1 && machineGunAmmo > 0){
 				if (Time.time > nextFire){
-					UseMachineGunAmmo();
+					machineGunAmmo--;
 					nextFire = Time.time + machineFireRate;
 					if (GetComponent<PlayerControllerScript>().Facing()){
-						Instantiate (machineBulletPrefab, weaponPoint.transform.position, transform.localRotation);
+						GameObject bullet = Instantiate (machineBulletPrefab, weaponPoint.transform.position, transform.localRotation) as GameObject;
+						bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(20, 0);
 					} else {
-						Instantiate (machineBulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180));
+						GameObject bullet = Instantiate (machineBulletPrefab, weaponPoint.transform.position, Quaternion.Euler(0, 0, 180)) as GameObject;
+						bullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-20, 0);
 					}
 				}
 			}
 		}
-		
+
+		if (Input.GetKeyUp (KeyCode.G)) {
+			Debug.Log ("throwing grenade");
+		}
+
 		//switching weapons
 		if (Input.GetKeyDown (KeyCode.Alpha1) && equippedWeapon != 0){
 			equippedWeapon = 0;
@@ -73,13 +78,14 @@ public class PlayerWeapons : MonoBehaviour {
 		}
 	}
 
-	public void UseMachineGunAmmo(){
-		machineGunAmmo--;
+	public void AddAmmo(int weaponType, int amount){
+		switch (weaponType) {
+		case 1:
+			machineGunAmmo += amount;
+			break;
+		}
 	}
-	
-	/*public int GetMachineGunAmmo(){
-		return machineGunAmmo;
-	}*/
+
 	public void SetGameManager(GameObject gameManagerObject){
 		gameManager = gameManagerObject;
 	}

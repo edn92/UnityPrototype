@@ -17,20 +17,18 @@ public class PlayerControllerScript : MonoBehaviour {
 	public bool grounded = false;
 
 	public bool facingRight = true;
-
+	
 	private PlayerWeapons playerWeapons;
 	private PlayerHealth playerHealth;
-	/*used for flipping player sprite
-	private bool facing = true;
-	 */
 
 	private GameObject gameManager;
 	//Animator anim;
 	private Rigidbody2D rgb2d;
+	private Animator animator;
 	// Use this for initialization
 	void Start () {
+		animator = this.GetComponent<Animator> ();
 		rgb2d = GetComponent<Rigidbody2D> ();
-
 		//not really used atm
 		playerWeapons = GetComponent<PlayerWeapons> ();
 		playerWeapons.SetGameManager (gameManager);
@@ -50,18 +48,25 @@ public class PlayerControllerScript : MonoBehaviour {
 			Flip();
 		}
 
+		if (translation == 0) {
+			animator.SetInteger ("State", 0);
+		}
+
 		if (translation != 0 && Input.GetKey (KeyCode.LeftShift) && 
 		        GetComponent<PlayerHealth> ().GetStamina () > 0 && grounded) {
+			animator.SetInteger ("State", 2);
 			playerHealth.UpdateStamina (-sprintStaminaDrain);
 			playerHealth.StartStaminaDelay ();
 			rgb2d.velocity = new Vector2 (translation * sprintSpeed, rgb2d.velocity.y);
 			//Debug.Log (translation * maxSpeed);
 		} else if (translation != 0) {
+			animator.SetInteger ("State", 1);
 			rgb2d.velocity = new Vector2 (translation * maxSpeed, rgb2d.velocity.y);
 		}
 
 		//jumping controls
 		if (grounded && Input.GetKeyDown (KeyCode.W)) {
+			animator.SetInteger ("State", 2);
 			rgb2d.AddForce (new Vector2 (0, jumpForce));
 			jumps++;
 		}
